@@ -35,6 +35,6 @@ public function update(Request $request, Oferta $oferta) {
 
 public function destroy(Oferta $oferta) {
     $oferta->delete();
-    return redirect('/ofertas');
+    return redirect('/ofertas')->with('success', 'Oferta eliminada con éxito');
 }
 }
