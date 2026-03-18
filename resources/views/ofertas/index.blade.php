@@ -19,9 +19,10 @@
         </div>
     @endif
 
-    <table class="table table-striped table-hover shadow-sm">
-        <thead class="table-dark">
+    <table class="table table-striped table-hover shadow-sm align-middle">
+        <thead class="table-dark text-center">
             <tr>
+                <th>ID</th>
                 <th>Título</th>
                 <th>Tienda</th>
                 <th>Vigencia</th>
@@ -32,26 +33,29 @@
         <tbody>
             @forelse($ofertas as $oferta)
             <tr>
+                <td class="text-center"><strong>{{ $oferta->id }}</strong></td>
                 <td>{{ $oferta->titulo }}</td>
                 <td>{{ $oferta->tienda }}</td>
-                <td>{{ $oferta->vigencia }}</td>
-                <td>
-                    <del class="text-danger">${{ number_format($oferta->precio_original, 2) }}</del> 
+                <td class="text-center">{{ $oferta->vigencia }}</td>
+                <td class="text-end">
+                    <del class="text-danger">${{ number_format($oferta->precio_original, 2) }}</del> <br>
                     <strong>${{ number_format($oferta->precio_descuento, 2) }}</strong>
                 </td>
-                <td>
+                <td class="text-center">
+                    <a href="{{ route('ofertas.show', $oferta->id) }}" class="btn btn-sm btn-info text-white">Ver</a>
+                    
                     <a href="{{ route('ofertas.edit', $oferta->id) }}" class="btn btn-sm btn-warning">Editar</a>
 
                     <form action="{{ route('ofertas.destroy', $oferta->id) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que quieres borrar esta oferta?')">Eliminar</button>
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que quieres borrar la oferta #{{ $oferta->id }}?')">Eliminar</button>
                     </form>
                 </td>
             </tr>
             @empty
             <tr>
-                <td colspan="5" class="text-center">No hay ofertas registradas aún.</td>
+                <td colspan="6" class="text-center py-4">No hay ofertas registradas aún.</td>
             </tr>
             @endforelse
         </tbody>

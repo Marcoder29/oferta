@@ -37,4 +37,9 @@ public function destroy(Oferta $oferta) {
     $oferta->delete();
     return redirect('/ofertas')->with('success', 'Oferta eliminada con éxito');
 }
+
+public function show(Oferta $oferta) 
+{
+    return view('ofertas.show', compact('oferta'));
+}
 }
