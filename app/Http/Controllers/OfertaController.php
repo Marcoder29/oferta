@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Oferta;
 use Illuminate\Http\Request;
+use App\Models\Oferta;
 
 class OfertaController extends Controller
 {
@@ -17,18 +17,24 @@ class OfertaController extends Controller
     }
 
     public function store(Request $request) {
-        // Validación básica
-        $request->validate([
-            'titulo' => 'required',
-            'vigencia' => 'required|date',
-            'tienda' => 'required',
-            'precio_original' => 'required|numeric',
-            'precio_descuento' => 'required|numeric',
-        ]);
-
-        Oferta::create($request->all());
-        return redirect()->route('ofertas.index');
+        try {
+            Oferta::create($request->all());
+            return redirect('/ofertas');
+        } catch (\Exception $e) {
+            return "Error en la base de datos: " . $e->getMessage();
+        }
     }
+    public function edit(Oferta $oferta) {
+    return view('ofertas.edit', compact('oferta'));
+}
 
-    
+public function update(Request $request, Oferta $oferta) {
+    $oferta->update($request->all());
+    return redirect('/ofertas');
+}
+
+public function destroy(Oferta $oferta) {
+    $oferta->delete();
+    return redirect('/ofertas');
+}
 }
