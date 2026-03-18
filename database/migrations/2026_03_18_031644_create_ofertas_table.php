@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ofertas', function (Table $table) {
+        Schema::create('ofertas', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
             $table->date('vigencia');
             $table->string('tienda');
-            $table->decimal('precio_original', 8,2);
-            $table->decimal('precio_descuento', 8,2);        
-
+            $table->decimal('precio_original', 10, 2);
+            $table->decimal('precio_descuento', 10, 2);
             $table->timestamps();
         });
     }
+    
 
     /**
      * Reverse the migrations.
